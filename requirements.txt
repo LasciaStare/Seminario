@@ -1,0 +1,11 @@
+pyarrow
+fastparquet
+missingno
+numpy
+pandas
+pyreadstat
+seaborn
+matplotlib
+plotly
+requests
+geopandas
