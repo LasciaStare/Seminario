@@ -9,3 +9,4 @@ matplotlib
 plotly
 requests
 geopandas
+statsmodels
