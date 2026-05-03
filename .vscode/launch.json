@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Ejecutar Dashboard (Streamlit)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/.conda/Scripts/streamlit.exe",
+            "args": [
+                "run",
+                "${workspaceFolder}/proyecto/app/streamlit_app.py"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ]
+}

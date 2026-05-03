@@ -10,3 +10,5 @@ plotly
 requests
 geopandas
 statsmodels
+
+streamlit
