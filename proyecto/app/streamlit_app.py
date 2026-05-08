@@ -294,10 +294,77 @@ def render_resumen_ejecutivo(df_panel, df_micro):
         
         st.plotly_chart(fig_pyr, use_container_width=True)
 
+
+    # --- Evolución de la Tasa Ajustada por Departamento ---
+    st.markdown("<hr style='border-color: #D1CDC0; margin-top: 30px;'>", unsafe_allow_html=True)
+    st.markdown("<h4 style='text-align: center; margin-top: 20px; font-family: Playfair Display, Georgia, serif;'>Evolución de la Tasa (por 100k habitantes)</h4>", unsafe_allow_html=True)
     
+    col_sel1, col_sel2, col_sel3, col_sel4 = st.columns([1, 2, 1, 1])
+    with col_sel2:
+        opciones_dpto = ["Nacional (Promedio)"] + sorted(df_panel['departamento'].dropna().unique().tolist())
+        dpto_seleccionado = st.selectbox("Filtrar por Departamento:", opciones_dpto)
 
+    if dpto_seleccionado == "Nacional (Promedio)":
+        df_tasa = df_panel.groupby('año')['tasa_cruda'].mean().reset_index()
+        tasa_avg = df_panel['tasa_cruda'].mean()
+    else:
+        df_tasa = df_panel[df_panel['departamento'] == dpto_seleccionado].groupby('año')['tasa_cruda'].mean().reset_index()
+        tasa_avg = df_tasa['tasa_cruda'].mean()
+        
+    with col_sel3:
+        st.metric(label="Promedio histórico", value=f"{tasa_avg:.1f} × 100k")
 
+    col_line, col_top = st.columns([1.5, 1])
+    
+    with col_line:
+        fig_tasa = px.line(
+            df_tasa, 
+            x='año', 
+            y='tasa_cruda',
+            markers=True
+        )
+        fig_tasa.update_traces(line_color='#8B864E', marker=dict(color='#2D2D2D', size=7)) # Verde Oliva con puntos carbón
+        fig_tasa.update_layout(
+            plot_bgcolor="rgba(0,0,0,0)",
+            paper_bgcolor="rgba(0,0,0,0)",
+            xaxis_title="",
+            yaxis_title="Tasa por 100k hab.",
+            template="plotly_white",
+            xaxis=dict(showgrid=False, zeroline=False, tickfont=dict(color="#2D2D2D")),
+            yaxis=dict(showgrid=True, gridcolor='#D1CDC0', zeroline=False, tickfont=dict(color="#2D2D2D"), showticklabels=True, rangemode='tozero'),
+            height=350,
+            margin=dict(l=0, r=0, t=10, b=0)
+        )
+        st.plotly_chart(fig_tasa, use_container_width=True)
 
+    with col_top:
+        st.markdown("<p style='text-align: center; color: #5B7C8E; font-size: 0.9em; font-weight: bold; margin-bottom: 2px;'>Top 5 Mayor Tasa Cruda Promedio</p>", unsafe_allow_html=True)
+        
+        # Calcular el top 5
+        df_top5 = df_panel.groupby('departamento')['tasa_cruda'].mean().reset_index().sort_values('tasa_cruda', ascending=False).head(5)
+        
+        fig_top5 = px.bar(
+            df_top5, 
+            x='tasa_cruda', 
+            y='departamento', 
+            orientation='h',
+            text='tasa_cruda'
+        )
+        fig_top5.update_traces(
+            marker_color='#A64D32', 
+            texttemplate='%{text:.1f}', 
+            textposition='inside',
+            insidetextanchor='middle'
+        )
+        fig_top5.update_layout(
+            plot_bgcolor="rgba(0,0,0,0)",
+            paper_bgcolor="rgba(0,0,0,0)",
+            xaxis=dict(showgrid=False, visible=False),
+            yaxis=dict(categoryorder='total ascending', showgrid=False, gridcolor='#D1CDC0', zeroline=False, tickfont=dict(color="#2D2D2D", size=10), title=""),
+            height=350,
+            margin=dict(l=0, r=0, t=20, b=0)
+        )
+        st.plotly_chart(fig_top5, use_container_width=True)
 
 # ==============================================================================
 # FUNCIONES DUMMY PARA LAS OTRA PESTAÑAS
