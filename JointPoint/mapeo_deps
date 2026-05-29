@@ -1,0 +1,11 @@
+region_map = {
+    0: 'Amazonas', 1: 'Antioquia', 2: 'Arauca', 3: 'Archipielago_de_San_Andres',
+    4: 'Atlantico', 5: 'Bogota_D.C.', 6: 'Bolivar', 7: 'Boyaca',
+    8: 'COLOMBIA_TOTAL', 9: 'Caldas', 10: 'Caqueta', 11: 'Casanare',
+    12: 'Cauca', 13: 'Cesar', 14: 'Choco', 15: 'Cundinamarca',
+    16: 'Cordoba', 17: 'Guainia', 18: 'Guaviare', 19: 'Huila',
+    20: 'La_Guajira', 21: 'Magdalena', 22: 'Meta', 23: 'Narino',
+    24: 'Norte_de_Santander', 25: 'Putumayo', 26: 'Quindio', 27: 'Risaralda',
+    28: 'Santander', 29: 'Sucre', 30: 'Tolima', 31: 'Valle_del_Cauca',
+    32: 'Vaupes', 33: 'Vichada'
+}
